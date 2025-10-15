@@ -41,53 +41,76 @@
               un objeto. Dentro de ese objeto, pones las variables que necesitas.
             </p>
             <pre><code>data() {
-  return {
-    contador: 0,
-    mensaje: "Hola Vue"
-  };
-}</code></pre>
+            return {
+            contador: 0,
+            mensaje: "Hola Vue"
+            };
+            }</code></pre>
           </div>
 
           <div v-else-if="cara === 2" key="2" class="opcion">
-            <h4><code>methods</code></h4>
+            <h4><code>methods()</code></h4>
             <p>
               Es donde defines las funciones o "acciones" que tu componente puede realizar.
               Es un objeto donde cada propiedad es el nombre de una función.
             </p>
             <pre><code>methods: {
-  incrementar() {
-    this.contador++;
-  },
-  saludar() {
-    alert(this.mensaje);
-  }
-}</code></pre>
+            incrementar() {
+            this.contador++;
+            },
+            saludar() {
+            alert(this.mensaje);
+            }
+          }</code></pre>
           </div>
 
-          <div v-else key="3" class="opcion">
-            <h4><code>computed</code></h4>
+          <div v-else-if="cara === 3" key="3" class="opcion">
+            <h4><code>computed()</code></h4>
             <p>
               Sirve para crear propiedades "computadas". Son valores que no se guardan directamente,
               sino que se calculan automáticamente a partir de otras variables de `data`. Vue detecta
               de qué variables dependen y recalcula el resultado solo cuando esas variables cambian.
             </p>
             <pre><code>data() {
-  return {
-    precio: 10,
-    cantidad: 2
-  };
-},
-computed: {
-  total() {
-    return this.precio * this.cantidad;
-  }
-}</code></pre>
+              return {
+                precio: 10,
+                cantidad: 2
+              };
+            },
+            computed: {
+              total() {
+                return this.precio * this.cantidad;
+              }
+            }</code></pre>
+          </div>
+
+          <div v-else key="4" class="opcion">
+            <h4><code>Watch()</code></h4>
+            <p>
+              La propiedad watch es un compartimento en la Options API que funciona como un "vigilante" o "monitor" de
+              tus datos. Te permite ejecutar una función cuando una variable reactiva específica (de tu sección data)
+              cambia de valor. Mientras que computed se usa para calcular un nuevo valor basado en datos
+              existentes, watch se usa para ejecutar una acción o un efecto secundario (como hacer una llamada a una API
+              o actualizar el título del documento) en respuesta a un cambio de datos.
+              Uso común: Acciones asíncronas, temporizadores o lógica compleja que debe ocurrir tras un cambio en el
+              estado.
+            </p>
+            <pre><code>data() {
+              return {
+                precio: 10,
+                cantidad: 2
+              };
+            },
+            computed: {
+              total() {
+                return this.precio * this.cantidad;
+              }
+            }</code></pre>
           </div>
         </transition>
         <button @click="next">Cambiar texto</button>
       </div>
     </div>
-
 
     <div class="seccion-tema">
       <h2>Composition API</h2>
@@ -116,11 +139,11 @@ computed: {
           </p>
           <pre><code>import { ref } from 'vue';
 
-const contador = ref(0);
+          const contador = ref(0);
 
-function incrementar() {
-  contador.value++; // Accedes al valor con .value
-}</code></pre>
+          function incrementar() {
+          contador.value++; // Accedes al valor con .value
+          }</code></pre>
         </div>
         <div class="opcion">
           <h4><code>reactive</code></h4>
@@ -130,11 +153,11 @@ function incrementar() {
             propiedades.
           </p>
           <pre><code>import { reactive } from 'vue';
-
-const estado = reactive({
-  precio: 10,
-  cantidad: 2
-});</code></pre>
+            
+          const estado = reactive({
+          precio: 10,
+          cantidad: 2
+          });</code></pre>
         </div>
       </div>
       <p class="nota">
@@ -217,8 +240,8 @@ import { ref } from 'vue';
 let imagen = ref("https://www.worldinside.com.ua/wp-content/uploads/2025/01/Vue.js-logo.webp");
 const cara = ref(1)
 
-function next(){
-  cara.value = cara.value === 3 ? 1 : cara.value + 1
+function next() {
+  cara.value = cara.value === 4 ? 1 : cara.value + 1
 }
 
 </script>

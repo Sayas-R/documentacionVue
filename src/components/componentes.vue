@@ -3,141 +3,128 @@
     <div class="contenedorInicio">
       <img :src="imagen" alt="Logo de Vue.js" class="imagenVue">
       <div class="queEsVue">
-        <h1>Componentes en Vue</h1>
+        <h1>Componentes en Vue: Comunicación Total</h1>
         <h2>
-          Los componentes son la espina dorsal de una aplicación de Vue. Nos permiten
-          crear interfaces de usuario modulares y reutilizables, facilitando la organización
-          y el mantenimiento del código.
+          Los componentes son bloques de código reutilizables. Entender cómo se organizan
+          y cómo se comunican entre sí (Padre -> Hijo con Props y Hijo <- Padre con Emits)
+          es fundamental para construir aplicaciones escalables.
         </h2>
       </div>
     </div>
 
     <div class="seccion-tema">
-      <h2>Importación y Componentización</h2>
+      <h2>Componentes</h2>
       <p>
-        La "componentización" es el proceso de dividir la interfaz de tu aplicación en
-        piezas pequeñas e independientes. Cada pieza es un componente. Por ejemplo, en una
-        tienda en línea, tendrías componentes separados para un botón, un producto, una
-        barra de navegación y un carrito de compras.
+        Piensa en los componentes como las piezas de un kit de Lego. En lugar de construir
+        toda tu página web desde un solo bloque gigante, Vue te permite dividir la interfaz
+        de usuario en piezas independientes, reutilizables y autocontenidas.
       </p>
-      <p>
-        Para usar un componente en otro, primero debes **importarlo** desde su archivo.
-        El proceso es el siguiente:
-      </p>
-
-      <div class="pasos-importacion">
-        <div class="paso-importar">
-          <h3>Paso 1: Crea el componente hijo</h3>
-          <p>
-            Crea un nuevo archivo Vue, por ejemplo, `BotonPersonalizado.vue`,
-            con su propio `template`, `script` y `style`.
-          </p>
-          <pre><code>&lt; src/components/BotonPersonalizado.vue &gt;
-&lt;template&gt;
-  &lt;button class="boton"&gt;Mi Botón&lt;/button&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default {
-  name: 'BotonPersonalizado'
-}
-&lt;/script&gt;
-
-&lt;style scoped&gt;
-.boton {
-  background-color: #41b883;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-&lt;/style&gt;</code></pre>
-        </div>
-
-        <div class="paso-importar">
-          <h3>Paso 2: Importa y usa el componente</h3>
-          <p>
-            En tu componente principal (el que usará al hijo), lo importas usando
-            la sintaxis de JavaScript y lo registras en el <code>&lt;script&gt;</code>. Luego,
-            lo utilizas como si fuera una etiqueta HTML normal en tu <code>&lt;template&gt;</code>.
-          </p>
-          <pre><code>&lt; Archivo Padre: componentes.vue --&gt;
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;h3&gt;Ejemplo de Componente Importado&lt;/h3&gt;
-    &lt;BotonPersonalizado /&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import BotonPersonalizado from './BotonPersonalizado.vue';
-
-export default {
-  components: {
-    BotonPersonalizado
-  }
-}
-&lt;/script&gt;</code></pre>
-        </div>
-      </div>
-    </div>
-
-    <div class="seccion-tema">
-      <h2>Props: Comunicación de Padre a Hijo</h2>
-      <p>
-        Las **`Props`** (abreviatura de "propiedades") son la forma en que un componente padre
-        le **pasa datos** a un componente hijo. Es la manera de hacer que los componentes
-        sean dinámicos y reutilizables. Piensa en las `props` como los "argumentos"
-        de una función: el componente padre le envía información al hijo para que este la use.
-      </p>
-
-      <h3>¿Cómo funcionan las Props?</h3>
-      <p>
-        Se definen en el componente hijo y se envían desde el componente padre.
-      </p>
-
+      <h3>Estructura de un Componente</h3>
       <div class="compartimentos">
         <div class="opcion">
-          <h4>Paso 1: Definir las props en el componente hijo</h4>
-          <p>
-            En el componente hijo, usas <code>defineProps()</code> para declarar qué datos
-            esperas recibir. Puedes especificar el tipo de dato que esperas para mayor seguridad.
+          <h4><code>&lt;template&gt;</code> (La Vista)</h4>
+          <p>Aquí defines la estructura HTML de tu componente. Es la parte visible para el usuario, solo debe tener un
+            elemento raíz (un solo <code>&lt;div&gt;</code> contenedor).
           </p>
-          <pre><code>&lt;!-- BotonDinamico.vue --&gt;
-&lt;script setup&gt;
-  const props = defineProps({
-    texto: {
-      type: String,
-      required: true
-    }
-  });
-&lt;/script&gt;</code></pre>
         </div>
-
         <div class="opcion">
-          <h4>Paso 2: Pasar las props desde el componente padre</h4>
-          <p>
-            En el componente padre, usas la sintaxis de **<code>v-bind</code>** (o su atajo, los dos puntos
-            <code>:</code>)
-            para enviar la información al componente hijo.
-          </p>
-          <pre><code>&lt;!-- Componente Padre --&gt;
-&lt;template&gt;
-  &lt;BotonDinamico :texto="mensajeBoton" /&gt;
-&lt;/template&gt;
-
-&lt;script setup&gt;
-import { ref } from 'vue';
-import BotonDinamico from './BotonDinamico.vue';
-
-const mensajeBoton = ref('Haz clic aquí');
-&lt;/script&gt;</code></pre>
+          <h4><code>&lt;script setup&gt;</code> (La Lógica)</h4>
+          <p>Aquí escribes la lógica de JavaScript de tu componente. Es donde declaras datos reactivos
+            (<code>ref</code>, <code>reactive</code>), defines funciones y manejas el comportamiento.</p>
+        </div>
+        <div class="opcion">
+          <h4><code>&lt;style scoped&gt;</code> (Los Estilos)</h4>
+          <p>Aquí añades los estilos CSS para tu componente. Si usas la propiedad `scoped`, los estilos solo afectarán a
+            este componente, evitando conflictos con otras partes de tu
+            página web. El atributo <code>scoped</code> aísla los estilos para que no afecten a otros componentes.</p>
         </div>
       </div>
       <p class="nota">
-        <strong>Regla de oro:</strong> Los datos fluyen en una sola dirección: de padre a hijo. Un componente
-        hijo no puede modificar directamente una prop que recibió de su padre.
+        <strong>Ventaja principal:</strong> Promueve la reutilización del código y hace que tu
+        aplicación sea más fácil de mantener y escalar.
+      </p>
+    </div>
+
+    <div class="seccion-tema">
+      <h2>2. Props: Comunicación de Padre a Hijo (➡️)</h2>
+      <p>
+        Las **Props** son la forma de enviar datos del Padre al Hijo. El Hijo las recibe como si fueran atributos,
+        y las usa para renderizar información dinámica.
+      </p>
+
+      <h3>Regla Unidireccional</h3>
+      <p>
+        Los datos fluyen solo hacia abajo. El componente Hijo puede leer la prop, pero no debe cambiarla.
+      </p>
+
+      <pre><code>&lt;!-- Componente Hijo: MensajeAlerta.vue --&gt;
+&lt;script setup&gt;
+  const props = defineProps({
+    titulo: { type: String, required: true },
+    color: { type: String, default: 'blue' }
+  });
+&lt;/script&gt;
+&lt;template&gt;
+  &lt;div :style="{ backgroundColor: color }"&gt;
+    &lt;h3&gt;{{ titulo }}&lt;/h3&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;!-- Componente Padre --&gt;
+&lt;template&gt;
+  &lt;MensajeAlerta titulo="Aviso Importante" color="red" /&gt; &lt;!-- Datos estáticos --&gt;
+  &lt;MensajeAlerta :titulo="tituloDinamico" :color="colorBase" /&gt; &lt;!-- Datos reactivos (usa :) --&gt;
+&lt;/template&gt;
+</code></pre>
+    </div>
+
+    <div class="seccion-tema">
+      <h2>3. Emits: Comunicación de Hijo a Padre (⬅️)</h2>
+      <p>
+        Los **Emits** son el mecanismo que usa el Hijo para **avisarle** al Padre cuando ha ocurrido
+        un evento (ej: un clic). El Padre escucha y reacciona.
+      </p>
+
+      <h3>El Proceso de Notificación</h3>
+      <ol>
+        <li>El Hijo declara qué eventos va a emitir (<code>defineEmits</code>).</li>
+        <li>Cuando ocurre algo, el Hijo llama a <code>emit('nombreDelEvento')</code>.</li>
+        <li>El Padre "escucha" ese evento usando la sintaxis <code>@nombreDelEvento="funcionPadre"</code>.</li>
+      </ol>
+
+      <pre><code>&lt;!-- Componente Hijo: BotonNotificador.vue --&gt;
+&lt;script setup&gt;
+  // 1. Declaramos el evento
+  const emit = defineEmits(['haSidoPresionado']);
+
+  function notificar() {
+    // 2. Emitimos el evento al Padre (con un dato extra)
+    emit('haSidoPresionado', new Date().toLocaleTimeString()); 
+  }
+&lt;/script&gt;
+&lt;template&gt;
+  &lt;button @click="notificar"&gt;Presionar&lt;/button&gt;
+&lt;/template&gt;
+
+&lt;!-- Componente Padre --&gt;
+&lt;script setup&gt;
+  import { ref } from 'vue';
+  import BotonNotificador from './BotonNotificador.vue';
+  const ultimaHora = ref('');
+
+  // Función que se ejecuta cuando el hijo avisa
+  function recibirNotificacion(hora) {
+    ultimaHora.value = hora;
+    console.log('El hijo ha sido presionado a las:', hora);
+  }
+&lt;/script&gt;
+&lt;template&gt;
+  &lt;BotonNotificador @haSidoPresionado="recibirNotificacion" /&gt;
+  &lt;p&gt;Última vez notificado: {{ ultimaHora }}&lt;/p&gt;
+&lt;/template&gt;</code></pre>
+      <p class="nota">
+        <strong>Conclusión:</strong> Con Props y Emits, tienes un sistema completo para el flujo de datos: Props para
+        enviar datos hacia abajo (Padre a Hijo) y Emits para enviar notificaciones hacia arriba (Hijo a Padre).
       </p>
     </div>
   </div>
@@ -222,26 +209,6 @@ let imagen = ref("https://www.worldinside.com.ua/wp-content/uploads/2025/01/Vue.
   line-height: 1.6;
 }
 
-.pasos-importacion {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  margin-top: 20px;
-}
-
-.paso-importar {
-  background-color: #f0f0f0;
-  border-left: 5px solid #35495e;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.paso-importar h3 {
-  color: #35495e;
-  font-size: 1.5rem;
-  margin-top: 0;
-}
-
 .compartimentos {
   display: flex;
   flex-direction: column;
@@ -262,10 +229,6 @@ let imagen = ref("https://www.worldinside.com.ua/wp-content/uploads/2025/01/Vue.
   margin-top: 0;
 }
 
-.opcion p {
-  font-size: 1.1rem;
-}
-
 pre {
   background-color: #2d2d2d;
   color: #f0f0f0;
@@ -276,6 +239,7 @@ pre {
 }
 
 code {
+  background-color: #e0e0e0;
   padding: 2px 6px;
   border-radius: 4px;
   font-family: 'Courier New', Courier, monospace;
